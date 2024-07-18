@@ -5,11 +5,11 @@ import (
 	"strconv"
 )
 
-var Count = 0
-var Sum = 0.0
-
 // Avg Operation
-type Avg struct{}
+type Avg struct{
+	sum float64
+	count int
+}
 
 func NewAvg() *Avg {
 	return &Avg{}
@@ -19,16 +19,16 @@ func (a *Avg) Apply(rows [][]string) [][]string {
 	for _, row := range rows {
 		if row != nil {
 			result, _ := strconv.ParseFloat(row[0], 64)
-			Count++
-			Sum += result
+			a.count++
+			a.sum += result
 		}
 	}
 	return nil // Return nil to skip writing the row
 }
 
 func (a *Avg) Final() []string {
-	if Count > 0 {
-		avg := Sum / float64(Count)
+	if a.count > 0 {
+		avg := a.sum / float64(a.count)
 		return []string{fmt.Sprintf("%.2f", avg)}
 	}
 	return nil
@@ -36,7 +36,7 @@ func (a *Avg) Final() []string {
 
 // SumCol Operation
 type SumCol struct {
-	sum int
+	sum float64
 }
 
 func NewSumCol() *SumCol {
@@ -46,7 +46,7 @@ func NewSumCol() *SumCol {
 func (s *SumCol) Apply(rows [][]string) [][]string {
 	for _, row := range rows {
 		if row != nil && len(row) > 0 {
-			result, _ := strconv.Atoi(row[0])
+			result, _ := strconv.ParseFloat(row[0], 64)
 			s.sum += result
 		}
 	}
@@ -54,5 +54,5 @@ func (s *SumCol) Apply(rows [][]string) [][]string {
 }
 
 func (s *SumCol) Final() []string {
-	return []string{strconv.Itoa(s.sum)}
+	return []string{fmt.Sprintf("%.2f", s.sum)}
 }

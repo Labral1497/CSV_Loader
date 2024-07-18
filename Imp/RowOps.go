@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// GetRows operation
 type GetRows struct {
 	indices []int
 }
