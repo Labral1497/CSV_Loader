@@ -24,3 +24,6 @@ Assumptions
 Single Accumulator Operation: Each test or process will include only one accumulator operation.
 Error-Free Conversions: Conversions from strings to integers will always succeed without errors.
 
+
+Running Instructions:
+Enter on your terminal "go run main.go" and watch as 3 output files are produced by 3 tests in your directory.
